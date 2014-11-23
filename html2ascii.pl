@@ -2,27 +2,23 @@
 
 use HTML::FormatText;
 
-
-sub asciize ($)
+sub main::asciize ($)
 {
-
     my $str = shift;
 
      # Only keep printable ascii chars
     $str =~ tr/\n\t\040-\176//cd;
 
-=head superfluous
+=head Superfluous
      # Expand tabs 
     1 while $str =~ s/\t/$" x ($ts - pos() % $ts)/e;
 =cut
     
     return $str;
-
 }
 
-sub output_handle ($)
+sub main::output_handle ($)
 {
-
     my $outfile = my $infile = shift;
 
     unless ($outfile =~ s/\.\Khtml?$/txt/)
@@ -62,24 +58,20 @@ sub output_handle ($)
     {
         return \*STDOUT;
     }
-
 }
 
 
  # Don't do anything if there's nothing to do
-
 die "!: Usage: $0 [OPTIONS] FILE [FILE..]\n" unless @ARGV;
 
-
  # Assign switch defaults
-
-$margin //=  2;
-$width  //= 79;
-$ts     //=  8;
+$main::margin //=  2;
+$main::width  //= 79;
+$main::ts     //=  8;
 
  # Make $verbose point to $v switch
+*main::verbose = \$main::v;
 
-*verbose = \$v;
 
 while ($infile = shift)
 {
@@ -100,7 +92,6 @@ while ($infile = shift)
             || close $write_handle
             || die qq(!: "$write_handle" - couldn't close: $!);
         }
-
     }
     else
     {
